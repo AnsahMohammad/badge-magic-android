@@ -65,7 +65,7 @@ jobs:
         if git show-ref --quiet refs/heads/gh-pages; then
           git branch -D gh-pages
         fi
-        git branch -m gh-pages
+        git checkout -b gh-pages
         git branch
         git push origin gh-pages --force --quiet
       env:
