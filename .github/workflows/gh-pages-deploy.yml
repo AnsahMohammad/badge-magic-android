@@ -25,26 +25,51 @@ jobs:
       run: |
         cd docs/sources
         make html
+        
       continue-on-error: false
 
-    - name: Publish to gh-pages
+    - name: Clone gh-pages branch
       run: |
+        git config --global user.name "GitHub Actions "
+        git config --global user.email "hello@hello.com"
         git clone --quiet --branch=gh-pages https://github.com/fossasia/badge-magic-android.git gh-pages
         cd gh-pages
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAGES_TOKEN }}
+
+    - name: Remove existing content
+      run: |
+        cd gh-pages
         rm -rf *
-        cp -r ../docs/sources/_build/html/* ../gh-pages
+      continue-on-error: false
+
+    - name: Copy HTML files
+      run: |
+        cp -r ./docs/sources/_build/html/* ./gh-pages
+      continue-on-error: false
+
+    - name: Create and switch to a new orphan branch
+      run: |
         git checkout --orphan temporary
-        git config --global user.email "actions@hesllo.com"
-        git config --global user.name "gh actions"
+      continue-on-error: false
+
+    - name: Commit changes
+      run: |
+        cd gh-pages/
         git add --all .
         git commit -am "[Auto] Update GH-Pages from ${{ github.ref }} ($(date +\%Y-\%m-\%d.\%H:\%M:\%S))"
+      continue-on-error: false
+
+    - name: Replace gh-pages branch
+      run: |
         if git show-ref --quiet refs/heads/gh-pages; then
           git branch -D gh-pages
         fi
         git branch -m gh-pages
-        git add --all .
-        git config --global user.email "actions@hesllo.com"
-        git config --global user.name "gh actions"
+      continue-on-error: false
+
+    - name: Push changes to GitHub Pages
+      run: |
         git push origin gh-pages --force --quiet
       env:
         GITHUB_TOKEN: ${{ secrets.PAGES_TOKEN }}
