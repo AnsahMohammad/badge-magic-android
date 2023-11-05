@@ -55,17 +55,13 @@ jobs:
         git checkout --orphan temporary
       continue-on-error: false
 
-    - name: Commit changes
+    - name: Commit and push changes
       run: |
         cd gh-pages
         git add --all .
         git commit -am "[Auto] Update GH-Pages from ${{ github.ref }} ($(date +\%Y-\%m-\%d.\%H:\%M:\%S))"
         git branch -D gh-pages
         git branch -m gh-pages
-      continue-on-error: false
-
-    - name: Push changes to GitHub Pages
-      run: |
         git push origin gh-pages --force --quiet
       env:
         GITHUB_TOKEN: ${{ secrets.PAGES_TOKEN }}
