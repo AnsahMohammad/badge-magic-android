@@ -29,23 +29,16 @@ jobs:
           git clone --quiet --branch=gh-pages https://github.com/fossasia/badge-magic-android gh-pages
           cd gh-pages
           rm -rf *
-
-      - name: Copy HTML files
-        run: |
+          cd ../
           cp -r ./docs/sources/_build/html/* ./gh-pages
-
-      - name: Commit and push to gh-pages branch
-        run: |
+          cd gh-pages
           git checkout --orphan temporary
+          git branch -D gh-pages
+          git branch -m gh-pages
           echo "pritning all branches"
           git branch
           echo "*****"
-          cd gh-pages
           ls
           git add --all .
           git commit -am "[Auto] Update GH-Pages from $GITHUB_REF ($(date +%Y-%m-%d.%H:%M:%S))"
-          if git show-ref --quiet refs/heads/gh-pages; then
-          git branch -D gh-pages
-          fi
-          git branch -m gh-pages
           git push origin gh-pages --force --quiet
