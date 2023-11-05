@@ -51,15 +51,13 @@ jobs:
     - name: Create and switch to a new orphan branch
       run: |
         git checkout --orphan temporary
-        git branch
       continue-on-error: false
 
     - name: Commit changes
       run: |
-        cd gh-pages/
+        cd gh-pages
         git add --all .
         git commit -am "[Auto] Update GH-Pages from ${{ github.ref }} ($(date +\%Y-\%m-\%d.\%H:\%M:\%S))"
-        git branch
       continue-on-error: false
 
     - name: Replace gh-pages branch
@@ -67,7 +65,11 @@ jobs:
         if git show-ref --quiet refs/heads/gh-pages; then
           git branch -D gh-pages
         fi
-        git branch gh-pages
+        git branch -m gh-pages
+      continue-on-error: false
+
+    - name: Push changes to GitHub Pages
+      run: |
         git push origin gh-pages --force --quiet
       env:
         GITHUB_TOKEN: ${{ secrets.PAGES_TOKEN }}
