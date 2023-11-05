@@ -56,13 +56,16 @@ jobs:
 
     - name: Commit changes
       run: |
+        cd gh-pages/
         git add --all .
         git commit -am "[Auto] Update GH-Pages from ${{ github.ref }} ($(date +\%Y-\%m-\%d.\%H:\%M:\%S))"
       continue-on-error: false
 
     - name: Replace gh-pages branch
       run: |
-        git branch -D gh-pages
+        if git show-ref --quiet refs/heads/gh-pages; then
+          git branch -D gh-pages
+        fi
         git branch -m gh-pages
       continue-on-error: false
 
