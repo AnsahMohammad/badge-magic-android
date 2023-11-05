@@ -25,18 +25,17 @@ jobs:
       run: |
         cd docs/sources
         make html
-        
       continue-on-error: false
 
     - name: Publish to gh-pages
       run: |
-        git config user.email "actions@hello.com"
-        git config user.name "gh actions"
         git clone --quiet --branch=gh-pages https://github.com/fossasia/badge-magic-android.git gh-pages
         cd gh-pages
         rm -rf *
         cp -r ../docs/sources/_build/html/* ../gh-pages
         git checkout --orphan temporary
+        git config --global user.email "actions@hesllo.com"
+        git config --global user.name "gh actions"
         git add --all .
         git commit -am "[Auto] Update GH-Pages from ${{ github.ref }} ($(date +\%Y-\%m-\%d.\%H:\%M:\%S))"
         if git show-ref --quiet refs/heads/gh-pages; then
