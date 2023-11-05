@@ -2,7 +2,6 @@ name: Publish GitHub Pages
 
 on:
   push:
-    branches: [ development ]
 
 jobs:
   build:
@@ -62,6 +61,7 @@ jobs:
 
     - name: Replace gh-pages branch
       run: |
+        git branch
         git branch -D gh-pages
         git branch -m gh-pages
       continue-on-error: false
