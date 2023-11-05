@@ -67,6 +67,7 @@ jobs:
         fi
         git checkout -b gh-pages
         git branch
+        git remote -v  # Print the remotes for verification
         git push origin gh-pages --force --quiet
       env:
         GITHUB_TOKEN: ${{ secrets.PAGES_TOKEN }}
