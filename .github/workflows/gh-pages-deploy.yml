@@ -43,6 +43,8 @@ jobs:
         fi
         git branch -m gh-pages
         git add --all .
+        git config --global user.email "actions@hesllo.com"
+        git config --global user.name "gh actions"
         git push origin gh-pages --force --quiet
       env:
         GITHUB_TOKEN: ${{ secrets.PAGES_TOKEN }}
