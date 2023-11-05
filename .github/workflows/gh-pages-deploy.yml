@@ -51,6 +51,7 @@ jobs:
 
     - name: Create and switch to a new orphan branch
       run: |
+        cd gh-pages
         git checkout --orphan temporary
       continue-on-error: false
 
@@ -59,10 +60,6 @@ jobs:
         cd gh-pages
         git add --all .
         git commit -am "[Auto] Update GH-Pages from ${{ github.ref }} ($(date +\%Y-\%m-\%d.\%H:\%M:\%S))"
-      continue-on-error: false
-
-    - name: Replace gh-pages branch
-      run: |
         git branch -D gh-pages
         git branch -m gh-pages
       continue-on-error: false
