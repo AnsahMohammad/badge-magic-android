@@ -7,6 +7,9 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -35,10 +38,6 @@ jobs:
           git checkout --orphan temporary
           git branch -D gh-pages
           git branch -m gh-pages
-          echo "pritning all branches"
-          git branch
-          echo "*****"
-          ls
           git add --all .
           git commit -am "[Auto] Update GH-Pages from $GITHUB_REF ($(date +%Y-%m-%d.%H:%M:%S))"
           git push origin gh-pages --force --quiet
