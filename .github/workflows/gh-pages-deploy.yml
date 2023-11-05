@@ -28,16 +28,11 @@ jobs:
         
       continue-on-error: false
 
-    - name: Clone gh-pages branch
+    - name: Publish to gh-pages
       run: |
-        git config --global user.name "GitHub Actions "
-        git config --global user.email "hello@hello.com"
+        git config user.email "actions@hello.com"
+        git config user.name "gh actions"
         git clone --quiet --branch=gh-pages https://github.com/fossasia/badge-magic-android.git gh-pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAGES_TOKEN }}
-
-    - name: Copy the content and publish to gh-pages
-      run: |
         cd gh-pages
         rm -rf *
         cp -r ../docs/sources/_build/html/* ../gh-pages
@@ -48,6 +43,7 @@ jobs:
           git branch -D gh-pages
         fi
         git branch -m gh-pages
+        git add --all .
         git push origin gh-pages --force --quiet
       env:
         GITHUB_TOKEN: ${{ secrets.PAGES_TOKEN }}
