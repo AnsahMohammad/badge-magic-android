@@ -28,6 +28,8 @@ jobs:
           make html
 
       - name: Clone gh-pages branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAGES_TOKEN }}
         run: |
           git clone --quiet --branch=gh-pages https://github.com/AnsahMohammad/badge-magic-android gh-pages
           cd gh-pages
