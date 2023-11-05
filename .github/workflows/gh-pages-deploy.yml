@@ -68,9 +68,9 @@ jobs:
         git branch -m gh-pages
       continue-on-error: false
 
-    - name: Push changes to GitHub Pages
-      run: |
-        git push origin gh-pages --force --quiet
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAGES_TOKEN }}
-      continue-on-error: false
+    # - name: Push changes to GitHub Pages
+    #   run: |
+    #     git push origin gh-pages --force --quiet
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.PAGES_TOKEN }}
+    #   continue-on-error: false
