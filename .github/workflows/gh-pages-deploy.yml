@@ -26,7 +26,7 @@ jobs:
 
       - name: Clone gh-pages branch
         run: |
-          git clone --quiet --branch=gh-pages https://github.com/fossasia/badge-magic-android gh-pages
+          git clone --quiet --branch=gh-pages https://github.com/AnsahMohammad/badge-magic-android gh-pages
           cd gh-pages
           rm -rf *
           cd ../
